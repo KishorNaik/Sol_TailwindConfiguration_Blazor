@@ -1,0 +1,72 @@
+﻿Step 1:
+Create a Client Folder in the root directory.
+
+Step 2:
+Go to View-> Select the Terminal
+
+Step 3:
+Go to client folder using Terminal
+
+Step 4:
+Create a NPM Package.json file using following command
+npm init -y
+
+Step 5:
+Install tailwind css and following package
+npm install --save-dev tailwindcss postcss autoprefixer postcss-cli
+
+Step 6:
+Create a postcss.config.js file inside the client folder.
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  }
+}
+
+Step 7:
+Configure Tailwind Css by using following command
+npx tailwindcss init
+
+module.exports = {
+    prefix="tw-",
+    purge: ["../**/*.razor"],
+    darkMode: false, // or 'media' or 'class'
+    theme: {
+        extend: {},
+    },
+    variants: {
+        extend: {},
+    },
+    plugins: [],
+}
+
+Step 8:
+Create a css folder inside the Client folder, add app.css file.
+
+    Add the following imports
+
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+
+Step 9:
+Building CSS with PostCSS Cli -> Go to package.json file-> Find the script tag.
+     "buildcss": "postcss ../Client/css/app.css -o ../wwwroot/css/app.min.css"
+
+Step 10:
+Run the tailwind css
+npm run buildcss
+    
+Or
+Configuring Post Build Events
+    Go to Solution File-> Right click on Edit Project File.
+
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="npm run buildcss" WorkingDirectory=".\Client\" />
+	</Target>
+
+Step 11:
+Adding Stylesheet Reference
+    Go to Page folder. -> Go _Host.cshtml file-> add following tag inside the Head Tag
+    <link href="~/css/app.min.css"  rel="stylesheet"/>
